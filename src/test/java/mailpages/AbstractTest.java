@@ -4,9 +4,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Parameters;
 
-import java.util.concurrent.TimeUnit;
+import java.net.MalformedURLException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AbstractTest {
@@ -15,13 +15,11 @@ public class AbstractTest {
     MailPage mailPage;
 
     @BeforeAll
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + ConfProperties.getProperty("chromedriver"));
+    @Parameters({"os", "browser", "url", "node"})
+    public void setUp(String os, String browser, String url, String node) throws MalformedURLException {
+        SetupTestDriver setupTestDriver = new SetupTestDriver(os, browser, url, node);
+        driver = setupTestDriver.getDriver();
 
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(ConfProperties.getProperty("url"));
         loginPage = new LoginPage(driver);
         mailPage = new MailPage(driver);
     }

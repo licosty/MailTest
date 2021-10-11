@@ -1,0 +1,32 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Yandex Mail Tests" verbose="1" parallel="tests">
+    <parameter name="url" value="https://passport.yandex.ru/auth"/>
+    <parameter name="os" value="windows"/>
+    <parameter name="node" value="http://localhost:5555"/>
+
+    <test name="Tests on Firefox" preserve-order="true" group-by-instances="true">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="mailpages.LoginPageTest"/>
+            <class name="mailpages.MailPageTest"/>
+        </classes>
+    </test>
+
+    <test name="Tests on IE11" preserve-order="true" group-by-instances="true">
+        <parameter name="browser" value="ie11"/>
+        <classes>
+            <class name="mailpages.LoginPageTest"/>
+            <class name="mailpages.MailPageTest"/>
+        </classes>
+    </test>
+
+    <test name="Tests on Chrome" preserve-order="true" group-by-instances="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="mailpages.LoginPageTest"/>
+            <class name="mailpages.MailPageTest"/>
+        </classes>
+    </test>
+
+</suite>
